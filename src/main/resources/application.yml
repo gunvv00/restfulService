@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: restFulApiService
+  datasource:
+    url: jdbc:mysql://localhost:3306/restfulapi?serverTimezone=UTC&characterEncoding=UTF-8
+    username: restful
+    password: rest123
+    driver-class-name: com.mysql.cj.jdbc.Driver

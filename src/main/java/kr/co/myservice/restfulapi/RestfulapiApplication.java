@@ -8,11 +8,7 @@ import org.springframework.context.ApplicationContext;
 public class RestfulapiApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext ac = SpringApplication.run(RestfulapiApplication.class, args);
-		String[] allBeanName = ac.getBeanDefinitionNames();
-		for (String beanName : allBeanName) {
-			System.out.println("beanName = " + beanName);
-		}
+		SpringApplication.run(RestfulapiApplication.class, args);
 	}
 
 }

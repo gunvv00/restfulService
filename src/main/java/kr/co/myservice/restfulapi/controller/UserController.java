@@ -1,8 +1,10 @@
 package kr.co.myservice.restfulapi.controller;
 
+import jakarta.validation.Valid;
 import kr.co.myservice.restfulapi.bean.User;
 import kr.co.myservice.restfulapi.dao.UserDaoService;
 import kr.co.myservice.restfulapi.exception.UserNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User saveUser = service.save(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -44,4 +46,16 @@ public class UserController {
 
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping(path = "/users/{id}")
+    public ResponseEntity deleteUser(@PathVariable int id) {
+        User user = service.deleteUser(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] Not Found", id));
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

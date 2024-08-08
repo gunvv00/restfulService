@@ -1,19 +1,21 @@
 package kr.co.myservice.restfulapi.bean;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 @Data
-// 명시된 필드에 모든 생성자 생성을 위한 Annotaion
 @AllArgsConstructor
-@JsonIgnoreProperties(value = {"password", "ssn"})
-public class User {
+@NoArgsConstructor
+@JsonFilter("UserInfo")
+public class AdminUser {
     private Integer id;
 
     @Size(min = 2, message = "name값은 2글자 이상 입력해주세요.")
@@ -22,10 +24,6 @@ public class User {
     @Past(message = "등록일은 현재 일자를 미래 날짜를 입력 하실수 없습니다.")
     private Date joinDate;
 
-//    @JsonIgnore
     private String password;
-
-    // 주민번호
-//    @JsonIgnore
     private String ssn;
 }

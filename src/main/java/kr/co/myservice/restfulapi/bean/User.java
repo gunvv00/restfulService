@@ -24,7 +24,7 @@ public class User {
     @Size(min = 2, message = "name값은 2글자 이상 입력해주세요.")
     private String name;
 
-    @Schema(title = "등록 일자", description = "사용자의 등록 일자를 입력해주세요.")
+    @Schema(title = "등록 일자", description = "사용자의 등록 일자를 입력해주세요. (입력하지 않으면 현재 날짜가 등록되어집니다.)")
     @Past(message = "등록일은 현재 일자를 미래 날짜를 입력 하실수 없습니다.")
     private Date joinDate;
 

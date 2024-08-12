@@ -20,7 +20,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi customTestOpenApi() {
-        // swagger에 공개 하고 싶은 uri만을 설정
+        // swagger에 공개 하고 싶은 api만 설정
         String[] path = {"/users/**" , "/admin/**"};
 
         return GroupedOpenApi.builder().group("일반 사용자와 관리자를 위한 USER 도메에 대한 API")

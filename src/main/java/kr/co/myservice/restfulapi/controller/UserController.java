@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import kr.co.myservice.restfulapi.bean.User;
 import kr.co.myservice.restfulapi.dao.UserDaoService;
 import kr.co.myservice.restfulapi.exception.UserNotFoundException;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
@@ -26,13 +31,19 @@ public class UserController {
     }
 
     @GetMapping(path = "/users/{id}")
-    public User findByIdUser(@PathVariable int id) {
+    public EntityModel<User> findByIdUser(@PathVariable int id) {
         User user = service.findById(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] Not Found", id));
         }
-        return user;
+
+        EntityModel entityModel = EntityModel.of(user);
+
+        WebMvcLinkBuilder linTo = linkTo(methodOn(this.getClass()).findAllUsers());
+        entityModel.add(linTo.withRel("all-users")); // all-users -> localhost:8088/users
+
+        return entityModel;
     }
 
     @PostMapping(path = "/users")
